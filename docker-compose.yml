@@ -1,0 +1,37 @@
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: pass
+
+  postgresql:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: pass
+
+  gate-simulator:
+    build: ./gate-simulator
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./gate-simulator/data.json:/app/data.json
+    restart: always
+
+volumes:
+  mysql-data:
+  postgres-data:
