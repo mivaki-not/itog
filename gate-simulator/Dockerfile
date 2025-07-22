@@ -1,4 +1,7 @@
-FROM openjdk:11-jre-slim
+FROM node:14-slim
 WORKDIR /app
-COPY aqa-shop.jar /app/aqa-shop.jar
-CMD ["java", "-jar", "aqa-shop.jar"]
+COPY package.json package-lock.json ./
+RUN npm install
+COPY app.js data.json ./
+CMD ["npm", "start"]
+EXPOSE 9999
